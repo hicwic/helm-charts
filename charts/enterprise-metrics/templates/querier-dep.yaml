@@ -85,6 +85,8 @@ spec:
             {{- end }}
             {{- if .Values.graphite.enabled }}
             - -graphite.enabled=true
+            - -graphite.querier.remote-read-enabled=true
+            - -graphite.querier.query-address={{ template "enterprise-metrics.fullname" . }}-gateway.{{ .Release.Namespace }}.svc:{{ .Values.config.server.http_listen_port }}/api/prom
             - -graphite.querier.graphite-fallback=http://graphite-web.{{ .Release.Namespace}}.svc:{{ .Values.config.server.http_listen_port }}
             - -graphite.write-proxy.distributor-client.address=dns://{{ template "enterprise-metrics.fullname" . }}-distributor.{{ .Release.Namespace }}.svc:{{ .Values.config.server.http_listen_port }}
             {{- end }}

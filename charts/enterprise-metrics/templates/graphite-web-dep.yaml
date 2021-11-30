@@ -62,8 +62,6 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.graphite_web.resources | nindent 12 }}
-          securityContext:
-            readOnlyRootFilesystem: true
       nodeSelector:
         {{- toYaml .Values.graphite_web.nodeSelector | nindent 8 }}
       affinity:
