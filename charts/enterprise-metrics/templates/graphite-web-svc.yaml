@@ -1,10 +1,10 @@
-{{- if eq .Values.graphite.enabled }}
+{{- if .Values.graphite.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: graphite-web
+  name: {{ template "enterprise-metrics.fullname" . }}-graphite-web
   labels:
-    app: graphite-web
+    app: {{ template "enterprise-metrics.fullname" . }}-graphite-web
     chart: {{ template "enterprise-metrics.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -16,11 +16,11 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: {{ .Values.graphite_web.service.http_listen_port }}
+    - port: {{ .Values.config.server.http_listen_port }}
       protocol: TCP
       name: graphite-http
       targetPort: 80
   selector:
-    app: graphite-web
+    app: {{ template "enterprise-metrics.fullname" . }}-graphite-web
     release: {{ .Release.Name }}
 {{- end -}}
